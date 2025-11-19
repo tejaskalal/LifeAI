@@ -2,10 +2,12 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+
+const JWT_SECRET = "MY_SECRET_KEY"; //move to .env in production
 
 router.post("/register", async (req, res) => {
   try {
-    console.log(" register route called");
     const { name, email, password } = req.body;
 
     if (!name || !email || !password) {
@@ -34,7 +36,6 @@ router.post("/register", async (req, res) => {
 
 router.post("/login", async (req, res) => {
   try {
-    console.log("login route called");
     const { email, password } = req.body;
 
     if (!email || !password) {
@@ -50,7 +51,22 @@ router.post("/login", async (req, res) => {
     if (!isMatch) {
       return res.status(400).json({ msg: "Invalid email or password" });
     }
-    return res.status(200).json({ msg: "Login successful" });
+
+    //creating webtoken
+
+    const token = jwt.sign({ id: user._id }, JWT_SECRET, {
+      expiresIn: "1h",
+    });
+
+    res.status(200).json({
+      msg: "Login successful",
+      token,
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+      },
+    });
   } catch (err) {
     res.status(500).send("Server Error");
   }
