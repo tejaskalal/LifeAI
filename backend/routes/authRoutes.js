@@ -3,8 +3,7 @@ const router = express.Router();
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-
-const JWT_SECRET = "MY_SECRET_KEY"; //move to .env in production
+require("dotenv").config();
 
 router.post("/register", async (req, res) => {
   try {
@@ -54,7 +53,7 @@ router.post("/login", async (req, res) => {
 
     //creating webtoken
 
-    const token = jwt.sign({ id: user._id }, JWT_SECRET, {
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
 
