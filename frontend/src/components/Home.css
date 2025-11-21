@@ -1,0 +1,121 @@
+body {
+  background: linear-gradient(135deg, #C0FFE0, #98FFCC);
+  color: #fff;
+}
+
+.input-wrapper {
+  position: relative;
+  width: 700px;
+  margin: auto;
+  margin-top: 60px;
+}
+
+.input-box {
+  width: 100%;
+  height: 100px;
+  border-radius: 30px;
+  display: block;
+  border: 1px solid #ccc;
+  padding-left: 30px;  
+  padding-right: 80px;  
+  font-size: 18px;
+  box-sizing: border-box;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  
+  background: rgba(27, 30, 29, 0.1); 
+  backdrop-filter: blur(20px);          
+  -webkit-backdrop-filter: blur(20px);
+
+}
+.icon-plus,
+.icon-mic {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 45px;       
+  color: gray;
+  cursor: pointer;
+  padding: 12px;          
+  border-radius: 50%;     
+  transition: background 0.3s, color 0.3s, transform 0.2s;
+}
+
+.icon-plus {
+  right: 70px;
+}
+
+.icon-mic {
+  right: 15px;
+}
+
+.icon-plus:hover,
+.icon-mic:hover {
+  background-color: #e0e0e0;
+  color: #000;               
+  transform: translateY(-50%) scale(1); 
+}
+
+
+@media (max-width: 768px) {
+  .input-wrapper {
+    width: 90%;        
+    margin-top: 100px;
+  }
+
+  .input-box {
+    height: 80px;        
+    font-size: 16px;
+    padding-right: 70px; 
+  }
+
+  .icon-plus,
+  .icon-mic {
+    font-size: 35px;     
+    padding: 10px;
+  }
+
+  .icon-plus {
+    right: 60px;
+  }
+
+  .icon-mic {
+    right: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .input-wrapper {
+    width: 95%;
+    margin-top: 50px;
+  }
+
+  .input-box {
+    height: 60px;
+    font-size: 14px;
+    padding-right: 60px;
+  }
+
+  .icon-plus,
+  .icon-mic {
+    font-size: 28px;
+    padding: 8px;
+  }
+
+  .icon-plus {
+    right: 50px;
+  }
+
+  .icon-mic {
+    right: 8px;
+  }
+}
+
+.row-paragraphs {
+  display: flex;
+  justify-content: center; 
+  gap: 25px;                
+  margin-top: 30px;
+  flex-wrap: wrap;          
+}
+
