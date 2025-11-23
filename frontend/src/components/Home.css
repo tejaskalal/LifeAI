@@ -1,6 +1,7 @@
 body {
-  background: linear-gradient(135deg, #C0FFE0, #98FFCC);
+  background: 255, 255, 255, 0.1;
   color: #fff;
+  
 }
 
 .input-wrapper {
