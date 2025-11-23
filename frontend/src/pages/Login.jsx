@@ -1,6 +1,7 @@
 import { useState } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
+import { FiMail, FiLock } from "react-icons/fi";
+import "./Login.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -14,7 +15,6 @@ const Login = () => {
     try {
       if (!email || !password) {
         setError("Please fill in all fields.");
-        setSuccess("");
         return;
       }
 
@@ -23,8 +23,7 @@ const Login = () => {
         password,
       });
 
-      const token = res.data.token;
-      localStorage.setItem("token", token);
+      localStorage.setItem("token", res.data.token);
       setSuccess("Login successful!");
       setError("");
     } catch (err) {
@@ -33,58 +32,60 @@ const Login = () => {
       );
       setSuccess("");
     }
-
-    setEmail("");
-    setPassword("");
   };
 
   return (
-    <div className="container mt-5" style={{ maxWidth: "500px" }}>
-      <h2 className="mb-4 text-center">Login</h2>
-      {error && (
-        <div className="alert alert-danger alert-dismissible fade show">
-          {error}
-          <button
-            type="button"
-            className="btn-close"
-            onClick={() => setError("")}
-          ></button>
-        </div>
-      )}
-      {success && (
-        <div className="alert alert-success alert-dismissible fade show">
-          {success}
-          <button
-            type="button"
-            className="btn-close"
-            onClick={() => setSuccess("")}
-          ></button>
-        </div>
-      )}
+    <div className="login-bg">
+      <div className="login-box">
+        <h2 className="login-heading text-dark">LOGIN</h2>
 
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <input
-            type="email"
-            className="form-control"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+        {error && <p className="msg error">{error}</p>}
+        {success && <p className="msg success">{success}</p>}
+
+        <form onSubmit={handleSubmit}>
+          <div className="input-wrap">
+            <FiMail className="input-icon" />
+            <input
+              type="email"
+              placeholder="Email"
+              className="input-field"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+
+          <div className="input-wrap">
+            <FiLock className="input-icon" />
+            <input
+              type="password"
+              placeholder="Password"
+              className="input-field"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+
+          <div className="remember">
+            <input type="checkbox" />
+            <span className="text-dark">Remember me</span>
+          </div>
+
+          <button type="submit" className="login-btn">
+            LOGIN
+          </button>
+        </form>
+
+        <div className="divider">Or login with</div>
+
+        <div className="social-buttons">
+          <button className="fb-btn">Facebook</button>
+          <button className="google-btn">Google</button>
         </div>
-        <div className="mb-5">
-          <input
-            type="password"
-            className="form-control"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <button type="submit" className="btn btn-primary w-50 d-block mx-auto">
-          Login
-        </button>
-      </form>
+
+        <p className="signup-text text-dark">
+          Not a member? <span className="signup-link">Sign up now</span>
+        </p>
+      </div>
     </div>
   );
 };

@@ -1,5 +1,7 @@
-import React, { useState } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
+import { useState } from "react";
+import axios from "axios";
+import { FiMail, FiUser, FiLock } from "react-icons/fi";
+import "./Signup.css";
 
 const Signup = () => {
   const [name, setName] = useState("");
@@ -8,95 +10,83 @@ const Signup = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!name || !email || !password) {
-      setError("All fields are required");
-      setSuccess("");
+      setError("All fields are required!");
       return;
     }
 
-    if (password.length < 6) {
-      setError("Password must be at least 6 characters long");
+    try {
+      const res = await axios.post("http://localhost:5000/api/auth/signup", {
+        name,
+        email,
+        password,
+      });
+
+      setSuccess("Signup successful! You can now login.");
+      setError("");
+    } catch (err) {
+      setError(
+        err.response?.data?.message || "Signup failed. Please try again."
+      );
       setSuccess("");
-      return;
     }
-
-    setError("");
-    setSuccess("Signup successful!");
-
-    console.log({ name, email, password });
-
-    setName("");
-    setEmail("");
-    setPassword("");
   };
 
   return (
-    <div className="container mt-5" style={{ maxWidth: "500px" }}>
-      <h2 className="mb-4 text-center">Signup</h2>
+    <div className="login-bg">
+      <div className="signup-box">
+        <h2 className="signup-heading text-dark">SIGN UP</h2>
 
-      {error && (
-        <div className="alert alert-danger alert-dismissible fade show">
-          {error}
-          <button
-            type="button"
-            className="btn-close"
-            onClick={() => setError("")}
-          ></button>
-        </div>
-      )}
+        {error && <p className="msg error">{error}</p>}
+        {success && <p className="msg success">{success}</p>}
 
-      {success && (
-        <div className="alert alert-success alert-dismissible fade show">
-          {success}
-          <button
-            type="button"
-            className="btn-close"
-            onClick={() => setSuccess("")}
-          ></button>
-        </div>
-      )}
+        <form onSubmit={handleSubmit}>
+          <div className="input-wrap">
+            <FiUser className="input-icon" />
+            <input
+              type="text"
+              placeholder="Full Name"
+              className="input-field"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
 
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label className="form-label">Name</label>
-          <input
-            type="text"
-            className="form-control"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Enter your name"
-          />
-        </div>
+          <div className="input-wrap">
+            <FiMail className="input-icon" />
+            <input
+              type="email"
+              placeholder="Email"
+              className="input-field"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
 
-        <div className="mb-3">
-          <label className="form-label">Email</label>
-          <input
-            type="email"
-            className="form-control"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Enter your email"
-          />
-        </div>
+          <div className="input-wrap">
+            <FiLock className="input-icon" />
+            <input
+              type="password"
+              placeholder="Password"
+              className="input-field"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
 
-        <div className="mb-3">
-          <label className="form-label">Password</label>
-          <input
-            type="password"
-            className="form-control"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Enter your password"
-          />
-        </div>
+          <button type="submit" className="signup-btn">
+            SIGN UP
+          </button>
+        </form>
 
-        <button type="submit" className="btn btn-primary w-50 d-block mx-auto">
-          Sign Up
-        </button>
-      </form>
+        <p className="signup-text text-dark">
+          Already have an account?{" "}
+          <span className="signup-link">Login now</span>
+        </p>
+      </div>
     </div>
   );
 };
