@@ -13,29 +13,29 @@ const Sidebar = () => {
     <div className="sidebar">
       <h2>LifeAI</h2>
 
-      <a>
+      <a data-title="Profile">
         <FaUser />
-        Profile
+        <span>Profile</span>
       </a>
 
-      <a>
+      <a data-title="AI">
         <FaRobot />
-        AI
+        <span>AI</span>
       </a>
 
-      <a>
+      <a data-title="About">
         <FaInfoCircle />
-        About
+        <span>About</span>
       </a>
 
-      <a>
+      <a data-title="Contact">
         <FaPhone />
-        Contact
+        <span>Contact</span>
       </a>
 
-      <a>
+      <a data-title="Account">
         <FaRegAddressCard />
-        Account
+        <span>Account</span>
       </a>
     </div>
   );
