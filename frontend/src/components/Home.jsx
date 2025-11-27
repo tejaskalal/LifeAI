@@ -6,7 +6,6 @@ import { FiMic } from "react-icons/fi";
 const Home = () => {
   return (
     <div className="main-content">
-      {/* Wrapper that aligns EVERYTHING in center */}
       <div className="page-container">
         <div className="glass-container">
           <h1 className="text-center mt-5 text-dark">Track. Improve. Thrive</h1>

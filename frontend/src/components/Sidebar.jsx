@@ -1,4 +1,4 @@
-import React from "react";
+import { Link } from "react-router-dom";
 import {
   FaUser,
   FaRobot,
@@ -7,36 +7,42 @@ import {
   FaRegAddressCard,
 } from "react-icons/fa";
 import "./Sidebar.css";
+import { FaFileWaveform } from "react-icons/fa6";
 
 const Sidebar = () => {
   return (
     <div className="sidebar">
       <h2>LifeAI</h2>
 
-      <a data-title="Profile">
+      <Link to="/profile" data-title="Profile">
         <FaUser />
         <span>Profile</span>
-      </a>
+      </Link>
 
-      <a data-title="AI">
+      <Link to="/ai" data-title="AI">
         <FaRobot />
         <span>AI</span>
-      </a>
+      </Link>
 
-      <a data-title="About">
+      <Link to="/about" data-title="About">
         <FaInfoCircle />
         <span>About</span>
-      </a>
+      </Link>
 
-      <a data-title="Contact">
+      <Link to="/contact" data-title="Contact">
         <FaPhone />
         <span>Contact</span>
-      </a>
+      </Link>
 
-      <a data-title="Account">
+      <Link to="/account" data-title="Account">
         <FaRegAddressCard />
         <span>Account</span>
-      </a>
+      </Link>
+
+      <Link to="/healthvitals" data-title="Health Vitals">
+        <FaFileWaveform />
+        <span>Health form</span>
+      </Link>
     </div>
   );
 };

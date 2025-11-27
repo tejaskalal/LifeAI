@@ -1,0 +1,94 @@
+.health-container {
+  max-width: 800px;
+  width: 100%;
+  margin: 30px auto;      
+  padding: 5px;
+  background: #ffffff;
+  border: none;
+ 
+
+ 
+  display: flex;
+  flex-direction: column;
+  align-items: center;    
+  box-sizing: border-box;
+}
+.form-title {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 26px;
+  font-weight: bold;
+  color: #222;
+}
+
+.health-form {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px 25px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #444;
+}
+
+.form-group input,
+.form-group select {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background: #f5f5f5;
+  font-size: 15px;
+  color: #222;
+  transition: 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #000;
+  background: #fff;
+  outline: none;
+}
+
+.submit-btn {
+  grid-column: span 2;
+  padding: 12px;
+  background: #000;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 17px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.25s ease-in-out;
+}
+
+.submit-btn:hover {
+  background: #333;
+  transform: translateY(-1px);
+}
+
+
+@media (max-width: 768px) {
+  @media (max-width: 768px) {
+  .health-container {
+    margin: 20px 10px;    
+    padding: 18px;
+  }
+}
+
+  .health-form {
+    grid-template-columns: 1fr;
+  }
+
+  .submit-btn {
+    grid-column: span 1;
+  }
+}
