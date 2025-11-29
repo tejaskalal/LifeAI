@@ -7,14 +7,15 @@
   position: fixed;
   left: 0;
   top: 0;
-  border-radius: 0 18px 18px 0;
+  border-radius: 0 0 18px 0;
   box-shadow: 4px 0 15px rgba(0,0,0,0.4);
 }
 
 .sidebar h2 {
-  text-align: center;
+  text-align:center;
   font-size: 24px;
-  margin-bottom: 30px;
+  margin-top: 20px;
+  margin-bottom: 60px;
   font-weight: bold;
   letter-spacing: 1px;
 }
