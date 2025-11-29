@@ -1,3 +1,4 @@
+import HealthTimeline from "./HealthTimeline";
 import "./Profile.css";
 import {
   FaUserCircle,
@@ -39,6 +40,7 @@ const Profile = () => {
           <p>Check your nutrition score</p>
         </div>
       </div>
+      <HealthTimeline />
     </div>
   );
 };
