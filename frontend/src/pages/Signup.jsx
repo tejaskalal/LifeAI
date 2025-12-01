@@ -84,7 +84,7 @@ const Signup = () => {
 
         <p className="signup-text text-dark">
           Already have an account?{" "}
-          <span className="signup-link">Login now</span>
+          <span className="signup-link text-dark">Login now</span>
         </p>
       </div>
     </div>

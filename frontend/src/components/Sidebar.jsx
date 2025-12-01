@@ -1,13 +1,8 @@
 import { Link } from "react-router-dom";
-import {
-  FaUser,
-  FaRobot,
-  FaInfoCircle,
-  FaPhone,
-  FaRegAddressCard,
-} from "react-icons/fa";
+import { FaUser, FaRobot, FaInfoCircle } from "react-icons/fa";
 import "./Sidebar.css";
 import { FaFileWaveform } from "react-icons/fa6";
+import { MdContactSupport } from "react-icons/md";
 
 const Sidebar = () => {
   return (
@@ -24,24 +19,19 @@ const Sidebar = () => {
         <span>AI</span>
       </Link>
 
+      <Link to="/healthvitals" data-title="Health Vitals">
+        <FaFileWaveform />
+        <span>Health form</span>
+      </Link>
+
       <Link to="/about" data-title="About">
         <FaInfoCircle />
         <span>About</span>
       </Link>
 
-      <Link to="/contact" data-title="Contact">
-        <FaPhone />
-        <span>Contact</span>
-      </Link>
-
-      <Link to="/account" data-title="Account">
-        <FaRegAddressCard />
-        <span>Account</span>
-      </Link>
-
-      <Link to="/healthvitals" data-title="Health Vitals">
-        <FaFileWaveform />
-        <span>Health form</span>
+      <Link to="/support" data-title="Contact">
+        <MdContactSupport />
+        <span>Support</span>
       </Link>
     </div>
   );

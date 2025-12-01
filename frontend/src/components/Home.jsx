@@ -8,12 +8,11 @@ const Home = () => {
     <div className="main-content">
       <div className="page-container">
         <div className="glass-container">
-          <h1 className="text-center mt-5 text-dark">Track. Improve. Thrive</h1>
+          <h1 className="text-center text-dark">Track. Improve. Thrive</h1>
           <p className="text-center mt-3 text-dark">
             LifeAI helps you stay healthy, fit, and mindful every day.
           </p>
 
-          {/* Input */}
           <form className="input-wrapper">
             <input
               type="text"
@@ -25,9 +24,7 @@ const Home = () => {
           </form>
         </div>
 
-        {/* Cards moved directly under input */}
         <div className="cards-container">
-          {/* Card 1 */}
           <div className="card">
             <h3>Current Status</h3>
             <div className="card-row">
@@ -40,7 +37,6 @@ const Home = () => {
             </div>
           </div>
 
-          {/* Card 2 */}
           <div className="card">
             <h3>Special for Today</h3>
             <p className="day-text">

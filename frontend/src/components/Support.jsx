@@ -1,9 +1,9 @@
-const Contact = () => {
+const Support = () => {
   return (
     <h1 style={{ color: "black" }} className="text-center">
-      Welcome to contact page
+      Welcome to support page
     </h1>
   );
 };
 
-export default Contact;
+export default Support;

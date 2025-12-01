@@ -83,7 +83,8 @@ const Login = () => {
         </div>
 
         <p className="signup-text text-dark">
-          Not a member? <span className="signup-link">Sign up now</span>
+          Not a member?{" "}
+          <span className="signup-link text-dark">Signup now </span>
         </p>
       </div>
     </div>
