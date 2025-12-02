@@ -9,7 +9,7 @@ import {
 export default function About() {
   return (
     <div className="about-container">
-      <h2 className="about-title mt-5">
+      <h2 className="about-title">
         About <span>LifeAI</span>
       </h2>
 
