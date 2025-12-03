@@ -8,7 +8,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-const HealthTimeline = () => {
+const Linebar = () => {
   const data = [
     { date: "Mon", score: 65 },
     { date: "Tue", score: 72 },
@@ -21,7 +21,7 @@ const HealthTimeline = () => {
 
   return (
     <div className="graph-card">
-      <h4 className="text-dark">Weekly Health Timeline</h4>
+      <h4 className="text-dark text-center mb-5">Weekly Health Timeline</h4>
 
       <ResponsiveContainer width="100%" height={300}>
         <LineChart data={data}>
@@ -41,4 +41,4 @@ const HealthTimeline = () => {
   );
 };
 
-export default HealthTimeline;
+export default Linebar;
