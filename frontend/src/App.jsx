@@ -2,11 +2,10 @@ import "./App.css";
 import Home from "./components/Home";
 import Profile from "./components/Profile";
 import About from "./components/About";
-// import Sidebar from "./components/Sidebar";
-import Support from "./components/Support";
 import { Routes, Route } from "react-router-dom";
 import Healthvitals from "./components/Healthvitals";
 import Navbar from "./components/Navbar";
+import Terms from "./components/Terms";
 
 function App() {
   return (
@@ -18,7 +17,7 @@ function App() {
         <Route path="/ai" element={<Home />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/about" element={<About />} />
-        <Route path="/support" element={<Support />} />
+        <Route path="/terms" element={<Terms />} />
         <Route path="/healthvitals" element={<Healthvitals />} />
       </Routes>
     </>

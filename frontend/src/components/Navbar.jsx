@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import { FaUser, FaRobot, FaInfoCircle } from "react-icons/fa";
 import { FaFileWaveform } from "react-icons/fa6";
-import { MdContactSupport } from "react-icons/md";
+import { FaShieldAlt } from "react-icons/fa";
+
 import "./Navbar.css";
 
 const Navbar = () => {
@@ -29,9 +30,9 @@ const Navbar = () => {
           <span>About</span>
         </Link>
 
-        <Link to="/support" data-title="Contact">
-          <MdContactSupport />
-          <span>Support</span>
+        <Link to="/terms" data-title="Terms">
+          <FaShieldAlt />
+          <span>Terms of service</span>
         </Link>
       </div>
     </nav>

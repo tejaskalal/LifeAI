@@ -14,7 +14,7 @@ const Profile = () => {
             <FaHeartPulse />
             Health Score
           </h2>
-          <p>Your health score</p>
+          <p>See how healthy you are today.</p>
           <h1>87%</h1>
         </div>
 
@@ -23,7 +23,7 @@ const Profile = () => {
             <BsSpeedometer />
             BMI
           </h2>
-          <p>Your Body mass index</p>
+          <p>Monitor your BMI for better health</p>
           <h1>23.5 kg/m3</h1>
         </div>
 
