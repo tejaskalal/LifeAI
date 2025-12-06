@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { FaUser, FaRobot, FaInfoCircle } from "react-icons/fa";
 import { FaFileWaveform } from "react-icons/fa6";
 import { FaShieldAlt } from "react-icons/fa";
+import { RiLoginBoxFill } from "react-icons/ri";
 
 import "./Navbar.css";
 
@@ -33,6 +34,11 @@ const Navbar = () => {
         <Link to="/terms" data-title="Terms">
           <FaShieldAlt />
           <span>Terms of service</span>
+        </Link>
+
+        <Link to="/login" data-title="Login">
+          <RiLoginBoxFill />
+          <span>Login</span>
         </Link>
       </div>
     </nav>

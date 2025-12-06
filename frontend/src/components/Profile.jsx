@@ -39,6 +39,9 @@ const Profile = () => {
       <div className="graph-container">
         <div className="graph-flex">
           <div className="graph-item line card">
+            <h4 className="text-dark text-center mb-5 mb-5">
+              Weekly Health Timeline
+            </h4>
             <Linebar />
           </div>
 

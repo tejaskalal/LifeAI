@@ -21,8 +21,6 @@ const Linebar = () => {
 
   return (
     <div className="graph-card">
-      <h4 className="text-dark text-center mb-5">Weekly Health Timeline</h4>
-
       <ResponsiveContainer width="100%" height={300}>
         <LineChart data={data}>
           <CartesianGrid strokeDasharray="3 3" />
