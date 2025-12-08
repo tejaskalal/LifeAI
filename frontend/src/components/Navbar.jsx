@@ -2,7 +2,8 @@ import { Link } from "react-router-dom";
 import { FaUser, FaRobot, FaInfoCircle } from "react-icons/fa";
 import { FaFileWaveform } from "react-icons/fa6";
 import { FaShieldAlt } from "react-icons/fa";
-import { RiLoginBoxFill } from "react-icons/ri";
+import { FiLogIn } from "react-icons/fi";
+import { MdDashboard } from "react-icons/md";
 
 import "./Navbar.css";
 
@@ -11,9 +12,9 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="navbar-logo">LifeAI</div>
       <div className="navbar-links">
-        <Link to="/profile" data-title="Profile">
-          <FaUser />
-          <span>Profile</span>
+        <Link to="/dashboard" data-title="Dashboard">
+          <MdDashboard />
+          <span>Dashboard</span>
         </Link>
 
         <Link to="/ai" data-title="AI">
@@ -37,7 +38,7 @@ const Navbar = () => {
         </Link>
 
         <Link to="/login" data-title="Login">
-          <RiLoginBoxFill />
+          <FiLogIn />
           <span>Login</span>
         </Link>
       </div>

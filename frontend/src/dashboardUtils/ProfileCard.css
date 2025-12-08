@@ -1,0 +1,10 @@
+.profile-card {
+  width: 30rem !important; 
+  border-radius: 20px !important;
+}
+
+.profile-card:hover {
+  transform: none !important;
+  transition: none !important;
+}
+

@@ -1,6 +1,6 @@
 import "./App.css";
 import Home from "./components/Home";
-import Profile from "./components/Profile";
+import Dashboard from "./components/Dashboard";
 import About from "./components/About";
 import { Routes, Route } from "react-router-dom";
 import Healthvitals from "./components/Healthvitals";
@@ -16,7 +16,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/ai" element={<Home />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/about" element={<About />} />
         <Route path="/terms" element={<Terms />} />
         <Route path="/healthvitals" element={<Healthvitals />} />

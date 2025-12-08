@@ -1,0 +1,65 @@
+.activity-card {
+  display: flex !important;
+  justify-content: space-around !important;
+  align-items: center !important;
+  gap: 22px !important;
+  margin-top: 45px !important;
+  flex-wrap: wrap !important;
+}
+
+.a-card {
+  width: 200px !important;
+  background: #111 !important;
+  border-radius: 15px !important;
+  padding: 25px 15px !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1) !important;
+  text-align: center !important;
+  transition: 0.25s ease-in-out !important;
+  cursor: pointer !important;
+}
+.a-card:hover {
+  transform: translateY(-5px) !important;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15) !important;
+}
+.a-icon {
+  width: 60px !important;
+  height: 60px !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  margin: 0 auto 15px !important;
+  font-size: 28px !important;
+  color: #fff !important;
+}
+.a-icon.bmi {
+  background-color: #6f42c1 !important;
+}
+
+.a-icon.sleep {
+  background-color: #0d6efd !important;
+}
+
+.a-icon.activity {
+  background-color: #198754 !important;
+}
+
+.a-icon.hydration {
+  background-color: #0dcaf0 !important; 
+}
+.a-status {
+  margin-top: 10px !important;
+  font-weight: 600 !important;
+}
+
+.a-status.normal {
+  color: #6f42c1 !important;
+}
+
+.a-status.good {
+  color: #198754 !important;
+}
+
+.a-status.neutral {
+  color: #0d6efd !important;
+}
