@@ -2,18 +2,21 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 function auth(req, res, next) {
-  const token = req.header("auth-token");
+  const authHeader = req.headers.authorization;
 
-  if (!token) {
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
     return res.status(401).json({ msg: "No token, authorization denied" });
   }
 
   try {
+    const token = authHeader.split(" ")[1];
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded;
+
+    req.user = { id: decoded.id };
     next();
   } catch (error) {
-    res.status(401).json({ msg: "Token invalid" });
+    console.error("JWT ERROR:", error.message);
+    return res.status(401).json({ msg: "Token invalid" });
   }
 }
 
