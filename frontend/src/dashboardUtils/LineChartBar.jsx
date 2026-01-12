@@ -8,19 +8,12 @@ import {
   Legend,
 } from "recharts";
 
-const LineChartBar = () => {
-  const data = [
-    { day: "Day 1", value: 78 },
-    { day: "Day 2", value: 89 },
-    { day: "Day 3", value: 77 },
-    { day: "Day 4", value: 72 },
-    { day: "Day 5", value: 91 },
-    { day: "Day 6", value: 84 },
-    { day: "Day 7", value: 71 },
-    { day: "Day 8", value: 79 },
-    { day: "Day 9", value: 90 },
-    { day: "Day 10", value: 55 },
-  ];
+const LineChartBar = ({ data }) => {
+  if (!data || data.length === 0) {
+    return (
+      <p className="text-white text-center">No health trend data available</p>
+    );
+  }
 
   return (
     <div
@@ -35,7 +28,7 @@ const LineChartBar = () => {
     >
       <LineChart width={600} height={300} data={data}>
         <CartesianGrid stroke="#333" strokeDasharray="4 4" />
-        <XAxis dataKey="day" tick={{ fill: "#fff" }} stroke="#555" />
+        <XAxis dataKey="date" tick={{ fill: "#fff" }} stroke="#555" />
         <YAxis tick={{ fill: "#fff" }} stroke="#555" />
         <Tooltip
           contentStyle={{

@@ -1,9 +1,15 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import axios from "axios";
 import { FiMail, FiLock } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "./AuthContext";
+
 import "./Login.css";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const { setIsLoggedIn } = useContext(AuthContext);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -15,22 +21,34 @@ const Login = () => {
     try {
       if (!email || !password) {
         setError("Please fill in all fields.");
+        setSuccess("");
+        setTimeout(() => setError(""), 2000);
         return;
       }
 
-      const res = await axios.post("http://localhost:5000/api/auth/login", {
+      const res = await axios.post("http://localhost:3000/api/auth/login", {
         email,
         password,
       });
 
       localStorage.setItem("token", res.data.token);
+      setIsLoggedIn(true);
+
+      setEmail("");
+      setPassword("");
       setSuccess("Login successful!");
       setError("");
+
+      setTimeout(() => {
+        setSuccess("");
+        navigate("/dashboard");
+      }, 1500);
     } catch (err) {
       setError(
         err.response?.data?.message || "Login failed. Please try again."
       );
       setSuccess("");
+      setTimeout(() => setError(""), 2000);
     }
   };
 
@@ -84,7 +102,13 @@ const Login = () => {
 
         <p className="signup-text text-dark">
           Not a member?{" "}
-          <span className="signup-link text-dark">Signup now </span>
+          <span
+            className="signup-link text-dark"
+            onClick={() => navigate("/signup")}
+            style={{ cursor: "pointer" }}
+          >
+            Signup now
+          </span>
         </p>
       </div>
     </div>

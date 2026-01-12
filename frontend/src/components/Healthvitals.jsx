@@ -1,19 +1,25 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Healthvitals.css";
 
 const Healthvitals = () => {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
+    date: new Date().toISOString().split("T")[0],
+    weight: "",
+    height: "",
     steps: "",
     sleepHours: "",
     waterIntake: "",
     stressLevel: "",
-    junkFood: "",
-    veggies: "",
-    protein: "",
     mood: "",
-    weight: "",
-    height: "",
+    ateJunkFood: "",
+    ateFruitsVeggies: "",
+    ateEnoughProtein: "",
   });
+
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
@@ -22,22 +28,60 @@ const Healthvitals = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Health form data:", formData);
+    if (loading) return;
 
-    setFormData({
-      steps: "",
-      sleepHours: "",
-      waterIntake: "",
-      stressLevel: "",
-      junkFood: "",
-      veggies: "",
-      protein: "",
-      mood: "",
-      weight: "",
-      height: "",
-    });
+    try {
+      setLoading(true);
+      const token = localStorage.getItem("token");
+
+      const response = await fetch("http://localhost:3000/api/user/health", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      // ONE ENTRY PER DAY HANDLING
+      if (response.status === 409) {
+        alert("You have already submitted your health data for today");
+        navigate("/dashboard");
+        return;
+      }
+
+      if (!response.ok) {
+        alert(data.message || "Failed to save health data");
+        return;
+      }
+
+      alert("Health data saved successfully");
+
+      setFormData({
+        date: new Date().toISOString().split("T")[0],
+        weight: "",
+        height: "",
+        steps: "",
+        sleepHours: "",
+        waterIntake: "",
+        stressLevel: "",
+        mood: "",
+        ateJunkFood: "",
+        ateFruitsVeggies: "",
+        ateEnoughProtein: "",
+      });
+
+      navigate("/dashboard", { replace: true });
+    } catch (error) {
+      console.error("Error saving health data:", error);
+      alert("Server error. Please try again later.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -45,6 +89,7 @@ const Healthvitals = () => {
       <h2 className="form-title">Daily Health Tracking</h2>
 
       <form className="health-form" onSubmit={handleSubmit}>
+        {/* Weight & Height */}
         <div className="form-row">
           <div className="form-group">
             <label>Weight (kg)</label>
@@ -53,7 +98,6 @@ const Healthvitals = () => {
               name="weight"
               value={formData.weight}
               onChange={handleChange}
-              placeholder="Your Weight"
             />
           </div>
 
@@ -64,10 +108,11 @@ const Healthvitals = () => {
               name="height"
               value={formData.height}
               onChange={handleChange}
-              placeholder="Your Height"
             />
           </div>
         </div>
+
+        {/* Steps & Sleep */}
         <div className="form-row">
           <div className="form-group">
             <label>Steps Walked</label>
@@ -76,7 +121,6 @@ const Healthvitals = () => {
               name="steps"
               value={formData.steps}
               onChange={handleChange}
-              placeholder="Your steps count"
             />
           </div>
 
@@ -87,27 +131,27 @@ const Healthvitals = () => {
               name="sleepHours"
               value={formData.sleepHours}
               onChange={handleChange}
-              placeholder="Total sleep hrs"
             />
           </div>
         </div>
+
+        {/* Water & Veggies */}
         <div className="form-row">
           <div className="form-group">
-            <label>Water Intake (Ltr)</label>
+            <label>Water Intake (Litres)</label>
             <input
               type="number"
               name="waterIntake"
               value={formData.waterIntake}
               onChange={handleChange}
-              placeholder="Total water intake"
             />
           </div>
 
           <div className="form-group">
-            <label>Ate Fruits/Veggies?</label>
+            <label>Ate Fruits / Veggies?</label>
             <select
-              name="veggies"
-              value={formData.veggies}
+              name="ateFruitsVeggies"
+              value={formData.ateFruitsVeggies}
               onChange={handleChange}
             >
               <option value="">Select</option>
@@ -116,12 +160,14 @@ const Healthvitals = () => {
             </select>
           </div>
         </div>
+
+        {/* Junk & Protein */}
         <div className="form-row">
           <div className="form-group">
             <label>Ate Junk Food?</label>
             <select
-              name="junkFood"
-              value={formData.junkFood}
+              name="ateJunkFood"
+              value={formData.ateJunkFood}
               onChange={handleChange}
             >
               <option value="">Select</option>
@@ -133,8 +179,8 @@ const Healthvitals = () => {
           <div className="form-group">
             <label>Ate Enough Protein?</label>
             <select
-              name="protein"
-              value={formData.protein}
+              name="ateEnoughProtein"
+              value={formData.ateEnoughProtein}
               onChange={handleChange}
             >
               <option value="">Select</option>
@@ -143,6 +189,8 @@ const Healthvitals = () => {
             </select>
           </div>
         </div>
+
+        {/* Stress & Mood */}
         <div className="form-row">
           <div className="form-group">
             <label>Stress Level</label>
@@ -152,10 +200,10 @@ const Healthvitals = () => {
               onChange={handleChange}
             >
               <option value="">Select</option>
-              <option value="no_stress">No Stress</option>
-              <option value="few_stress">Few Stress</option>
-              <option value="a_lot_stress">A Lot Stress</option>
-              <option value="huge_stress">Huge Stress</option>
+              <option value="none">None</option>
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
             </select>
           </div>
 
@@ -170,8 +218,9 @@ const Healthvitals = () => {
             </select>
           </div>
         </div>
-        <button type="submit" className="submit-btn">
-          Save Health Data
+
+        <button type="submit" className="submit-btn" disabled={loading}>
+          {loading ? "Saving..." : "Save Health Data"}
         </button>
       </form>
     </div>

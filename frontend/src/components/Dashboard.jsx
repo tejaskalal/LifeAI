@@ -1,34 +1,64 @@
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 import DonutChart from "../dashboardUtils/DonutChart";
 import ProfileCard from "../dashboardUtils/ProfileCard";
 import LineChartBar from "../dashboardUtils/LineChartBar";
+
 import { BiTachometer } from "react-icons/bi";
-import { FaBed } from "react-icons/fa";
-import { FaWalking } from "react-icons/fa";
+import { FaBed, FaWalking } from "react-icons/fa";
 import { MdOutlineWaterDrop } from "react-icons/md";
-import { FaGlassWater } from "react-icons/fa6";
-import { FaPersonWalking } from "react-icons/fa6";
+import { FaGlassWater, FaPersonWalking } from "react-icons/fa6";
 import { CiFaceSmile } from "react-icons/ci";
 
 import "./Dashboard.css";
 
 const Dashboard = () => {
+  const [data, setData] = useState(null);
+  const [aiInsights, setAiInsights] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchDashboard = async () => {
+      const token = localStorage.getItem("token");
+      try {
+        // Dashboard data
+        const res = await axios.get("http://localhost:3000/api/dashboard", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setData(res.data);
+
+        // AI insights
+        try {
+          const aiRes = await axios.post(
+            "http://localhost:3000/api/ai/predict",
+            {},
+            { headers: { Authorization: `Bearer ${token}` } }
+          );
+          setAiInsights(aiRes.data.aiInsights);
+        } catch {
+          setAiInsights(null);
+        }
+      } catch (err) {
+        if (err.response?.status === 401) navigate("/login");
+      }
+    };
+
+    fetchDashboard();
+  }, [navigate]);
+
+  if (!data) return <p>Loading...</p>;
+
   return (
     <div className="container">
       <h1 className="text-dark text-center head-h">Dashboard</h1>
-      <p className="text-dark text-center">Welcome to the dashboard!</p>
+      <p className="text-dark text-center">
+        Welcome, <strong>{data.name}</strong>
+      </p>
 
-      <div
-        style={{
-          padding: "25px",
-          width: "100%",
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "center",
-          alignItems: "stretch",
-          gap: "25px",
-          marginTop: "25px",
-        }}
-      >
+      {/* SCORE + PROFILE */}
+      <div style={{ padding: "25px", display: "flex", gap: "25px" }}>
         <div
           style={{
             flex: 1,
@@ -38,48 +68,37 @@ const Dashboard = () => {
             minHeight: "280px",
             boxShadow: "0 1px 4px rgba(0,0,0,0.08)",
             display: "flex",
-            flexDirection: "row",
             justifyContent: "space-between",
-            alignItems: "center",
-            color: "black",
-            gap: "20px",
           }}
         >
-          <div
-            style={{
-              flex: 1,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <DonutChart score={78} />
-            <h5 className="text-muted text-center mt-2">
-              Here your today's score
-            </h5>
+          <div style={{ flex: 1, textAlign: "center" }}>
+            <DonutChart score={data.healthValue ?? 0} />
+            <h5 className="text-muted mt-2">Here is your today's score</h5>
           </div>
 
-          <div
-            style={{
-              flex: 1,
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <ProfileCard />
-          </div>
+          <ProfileCard
+            name={data.name}
+            weight={data.weight ?? "--"}
+            height={data.height ?? "--"}
+          />
         </div>
       </div>
+
+      {/* ACTIVITY CARDS (UNCHANGED LOGIC) */}
       <div className="activity-card">
         <div className="a-card">
           <div className="a-icon bmi">
             <BiTachometer />
           </div>
           <h3 className="text-white">BMI</h3>
-          <h4 className="text-white">22.5kg/m3</h4>
-          <h5 className="a-status normal">Normal</h5>
+          <h4 className="text-white">{data.bmi ?? "--"}</h4>
+          {data.bmi >= 18.5 && data.bmi <= 24.9 ? (
+            <h5 className="a-status good">Normal</h5>
+          ) : data.bmi < 18.5 ? (
+            <h5 className="a-status low">Underweight</h5>
+          ) : (
+            <h5 className="a-status high">Overweight</h5>
+          )}
         </div>
 
         <div className="a-card">
@@ -87,8 +106,12 @@ const Dashboard = () => {
             <FaBed />
           </div>
           <h3 className="text-white">Sleep</h3>
-          <h4 className="text-white">7 hrs</h4>
-          <h5 className="a-status good">Good</h5>
+          <h4 className="text-white">{data.sleep ?? "--"} hrs</h4>
+          {data.sleep >= 7 ? (
+            <h5 className="a-status good">Good</h5>
+          ) : (
+            <h5 className="a-status low">Low</h5>
+          )}
         </div>
 
         <div className="a-card">
@@ -96,8 +119,12 @@ const Dashboard = () => {
             <FaWalking />
           </div>
           <h3 className="text-white">Activity</h3>
-          <h4 className="text-white">5,000</h4>
-          <h5 className="a-status neutral">Steps</h5>
+          <h4 className="text-white">{data.steps ?? "--"}</h4>
+          {data.steps >= 8000 ? (
+            <h5 className="a-status good">Good</h5>
+          ) : (
+            <h5 className="a-status neutral">Average</h5>
+          )}
         </div>
 
         <div className="a-card">
@@ -105,41 +132,56 @@ const Dashboard = () => {
             <MdOutlineWaterDrop />
           </div>
           <h3 className="text-white">Hydration</h3>
-          <h4 className="text-white">2.5 L</h4>
-          <h5 className="a-status good">Good</h5>
+          <h4 className="text-white">{data.waterIntake ?? "--"} L</h4>
+          {data.waterIntake >= 2 ? (
+            <h5 className="a-status good">Good</h5>
+          ) : (
+            <h5 className="a-status low">Low</h5>
+          )}
         </div>
       </div>
 
+      {/* GRAPH + AI */}
       <div className="graph-card d-flex justify-content-around mt-5 gap-3">
         <div className="graph mt-5">
           <h3 className="text-white text-center mb-3">Graph</h3>
-          <LineChartBar />
+          {data.healthTrend && data.healthTrend.length > 0 ? (
+            <LineChartBar data={data.healthTrend} />
+          ) : (
+            <p className="text-white text-center">No health history yet</p>
+          )}
         </div>
 
         <div className="insight">
           <h3 className="text-white text-center">Insights</h3>
           <div className="insight-content">
-            <p className="text-white">
-              • Your sleep quality has improved by 15% compared to last week.
-            </p>
-            <p className="text-white">
-              • You have maintained a consistent hydration level for the past 5
-              days.
-            </p>
-            <p className="text-white">
-              • Your average daily step count has increased by 10% this month.
-            </p>
-            <p className="text-white">
-              • Your BMI is within the normal range. Keep up the good work!
-            </p>
-            <p className="text-white">
-              • Consider incorporating more variety into your physical
-              activities to target different muscle groups.
-            </p>
+            {aiInsights ? (
+              <>
+                {aiInsights.strengths?.map((i, idx) => (
+                  <p key={idx} className="text-white">
+                    ✅ {i}
+                  </p>
+                ))}
+                {aiInsights.concerns?.map((i, idx) => (
+                  <p key={idx} className="text-white">
+                    ⚠️ {i}
+                  </p>
+                ))}
+                {aiInsights.suggestions &&
+                  Object.values(aiInsights.suggestions).map((i, idx) => (
+                    <p key={idx} className="text-white">
+                      💡 {i}
+                    </p>
+                  ))}
+              </>
+            ) : (
+              <p className="text-white">
+                AI insights will appear after health data submission
+              </p>
+            )}
           </div>
         </div>
       </div>
-
       <div className="habit-card d-flex justify-content-around mt-5 gap-3 container">
         <div className="card habit-item text-center p-3 shadow-sm">
           <div className="icon-container mb-2">
@@ -147,30 +189,30 @@ const Dashboard = () => {
           </div>
           <h4 className="text-white fw-bold">Water</h4>
           <p className="days">5 Days</p>
-          <p className="info-text">
-            Staying hydrated boosts energy and helps you stay active. Great
-            streak!
+          <p className="info-text text-light small">
+            Staying hydrated boosts energy and keeps your body active.
           </p>
         </div>
+
         <div className="card habit-item text-center p-3 shadow-sm">
           <div className="icon-container mb-2">
             <FaPersonWalking className="icon" />
           </div>
           <h4 className="text-white fw-bold">Steps</h4>
           <p className="days">3 Days</p>
-          <p className="info-text">
-            Walking daily improves heart health. Keep moving forward!
+          <p className="info-text text-light small">
+            Daily walking improves heart health and stamina.
           </p>
         </div>
+
         <div className="card habit-item text-center p-3 shadow-sm">
           <div className="icon-container mb-2">
             <CiFaceSmile className="icon" />
           </div>
           <h4 className="text-white fw-bold">Mood</h4>
           <p className="days">7 Days</p>
-          <p className="info-text">
-            A consistent good mood shows emotional balance. You're doing
-            amazing!
+          <p className="info-text text-light small">
+            A positive mood reflects good mental and emotional balance.
           </p>
         </div>
       </div>

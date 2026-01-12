@@ -1,9 +1,12 @@
 import { useState } from "react";
 import axios from "axios";
 import { FiMail, FiUser, FiLock } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 import "./Signup.css";
 
 const Signup = () => {
+  const navigate = useNavigate();
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -15,11 +18,13 @@ const Signup = () => {
 
     if (!name || !email || !password) {
       setError("All fields are required!");
+      setSuccess("");
+      setTimeout(() => setError(""), 2000);
       return;
     }
 
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/signup", {
+      await axios.post("http://localhost:3000/api/auth/register", {
         name,
         email,
         password,
@@ -27,11 +32,20 @@ const Signup = () => {
 
       setSuccess("Signup successful! You can now login.");
       setError("");
+      setName("");
+      setEmail("");
+      setPassword("");
+
+      setTimeout(() => {
+        setSuccess("");
+        navigate("/login");
+      }, 2000);
     } catch (err) {
       setError(
         err.response?.data?.message || "Signup failed. Please try again."
       );
       setSuccess("");
+      setTimeout(() => setError(""), 2000);
     }
   };
 
@@ -84,7 +98,13 @@ const Signup = () => {
 
         <p className="signup-text text-dark">
           Already have an account?{" "}
-          <span className="signup-link text-dark">Login now</span>
+          <span
+            className="signup-link text-dark"
+            onClick={() => navigate("/login")}
+            style={{ cursor: "pointer" }}
+          >
+            Login now
+          </span>
         </p>
       </div>
     </div>
