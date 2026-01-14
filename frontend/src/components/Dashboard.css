@@ -133,3 +133,61 @@
   padding: 20px !important;
   border-radius: 10px !important;
 }
+
+.insight {
+  max-width: 900px;
+  margin: auto;
+}
+
+.insight-title {
+  color: #fff;
+  text-align: center;
+  margin-bottom: 16px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.insight-content {
+  height: 320px;
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+.insight-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #ccc;
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+.insight-item svg {
+  font-size: 20px;  
+  flex-shrink: 0;
+}
+
+.insight-item.success svg {
+  color: #2ecc71;
+}
+
+.insight-item.danger svg {
+  color: #ff6b6b;
+}
+
+.insight-item.suggest svg {
+  color: #9b5cff;
+}
+
+.insight-empty {
+  color: #aaa;
+  text-align: center;
+}
+
+.insight-content::-webkit-scrollbar {
+  width: 6px;
+}
+.insight-content::-webkit-scrollbar-thumb {
+  background: #9b5cff;
+  border-radius: 10px;
+}

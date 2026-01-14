@@ -47,7 +47,6 @@ const Healthvitals = () => {
 
       const data = await response.json();
 
-      // ONE ENTRY PER DAY HANDLING
       if (response.status === 409) {
         alert("You have already submitted your health data for today");
         navigate("/dashboard");

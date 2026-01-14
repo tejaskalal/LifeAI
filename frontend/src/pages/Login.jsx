@@ -1,14 +1,18 @@
 import { useState, useContext } from "react";
 import axios from "axios";
 import { FiMail, FiLock } from "react-icons/fi";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { AuthContext } from "./AuthContext";
 
 import "./Login.css";
 
 const Login = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { setIsLoggedIn } = useContext(AuthContext);
+
+  // page user wanted before login
+  const from = location.state?.from || "/dashboard";
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -31,6 +35,7 @@ const Login = () => {
         password,
       });
 
+      // save token
       localStorage.setItem("token", res.data.token);
       setIsLoggedIn(true);
 
@@ -39,9 +44,10 @@ const Login = () => {
       setSuccess("Login successful!");
       setError("");
 
+      // redirect back to requested page
       setTimeout(() => {
         setSuccess("");
-        navigate("/dashboard");
+        navigate(from, { replace: true });
       }, 1500);
     } catch (err) {
       setError(

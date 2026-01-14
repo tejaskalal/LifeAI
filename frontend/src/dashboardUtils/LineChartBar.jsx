@@ -6,6 +6,7 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
+  ResponsiveContainer,
 } from "recharts";
 
 const LineChartBar = ({ data }) => {
@@ -19,35 +20,89 @@ const LineChartBar = ({ data }) => {
     <div
       style={{
         width: "100%",
-        display: "flex",
-        justifyContent: "center",
-        backgroundColor: "black",
-        padding: "20px",
-        borderRadius: "12px",
+        maxWidth: "900px",
+        margin: "auto",
+        background: "linear-gradient(145deg, #0f0f0f, #1a1a1a)",
+        padding: "24px",
+        borderRadius: "16px",
+        boxShadow: "0 0 25px rgba(155, 92, 255, 0.25)",
       }}
     >
-      <LineChart width={600} height={300} data={data}>
-        <CartesianGrid stroke="#333" strokeDasharray="4 4" />
-        <XAxis dataKey="date" tick={{ fill: "#fff" }} stroke="#555" />
-        <YAxis tick={{ fill: "#fff" }} stroke="#555" />
-        <Tooltip
-          contentStyle={{
-            backgroundColor: "#111",
-            border: "1px solid #444",
-            color: "#fff",
-          }}
-          labelStyle={{ color: "#fff" }}
-        />
-        <Legend wrapperStyle={{ color: "#fff" }} />
-        <Line
-          type="monotone"
-          dataKey="value"
-          stroke="#9b5cff"
-          strokeWidth={3}
-          dot={{ r: 5, fill: "#9b5cff" }}
-          activeDot={{ r: 7 }}
-        />
-      </LineChart>
+      <h3
+        style={{
+          color: "#fff",
+          textAlign: "center",
+          marginBottom: "16px",
+          fontWeight: "600",
+          letterSpacing: "0.5px",
+        }}
+      >
+        Health Trend Overview
+      </h3>
+
+      <ResponsiveContainer width="100%" height={320}>
+        <LineChart data={data}>
+          <defs>
+            <linearGradient id="healthGradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#9b5cff" stopOpacity={0.9} />
+              <stop offset="100%" stopColor="#9b5cff" stopOpacity={0.1} />
+            </linearGradient>
+          </defs>
+
+          <CartesianGrid stroke="#2b2b2b" strokeDasharray="3 6" />
+
+          <XAxis
+            dataKey="date"
+            tick={{ fill: "#ccc", fontSize: 12 }}
+            stroke="#444"
+          />
+
+          <YAxis
+            tick={{ fill: "#ccc", fontSize: 12 }}
+            stroke="#444"
+            allowDecimals={false}
+          />
+
+          <Tooltip
+            contentStyle={{
+              background: "rgba(20, 20, 20, 0.95)",
+              border: "1px solid #9b5cff",
+              borderRadius: "10px",
+              boxShadow: "0 0 15px rgba(155, 92, 255, 0.4)",
+              color: "#fff",
+            }}
+            labelStyle={{ color: "#9b5cff", fontWeight: "bold" }}
+            cursor={{ stroke: "#9b5cff", strokeWidth: 1 }}
+          />
+
+          <Legend
+            verticalAlign="top"
+            height={36}
+            wrapperStyle={{ color: "#fff" }}
+          />
+
+          <Line
+            type="monotone"
+            dataKey="value"
+            stroke="url(#healthGradient)"
+            strokeWidth={3}
+            dot={{
+              r: 4,
+              fill: "#9b5cff",
+              stroke: "#fff",
+              strokeWidth: 1,
+            }}
+            activeDot={{
+              r: 7,
+              fill: "#fff",
+              stroke: "#9b5cff",
+              strokeWidth: 3,
+            }}
+            animationDuration={1200}
+            animationEasing="ease-out"
+          />
+        </LineChart>
+      </ResponsiveContainer>
     </div>
   );
 };

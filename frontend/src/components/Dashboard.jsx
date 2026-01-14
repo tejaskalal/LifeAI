@@ -11,6 +11,9 @@ import { FaBed, FaWalking } from "react-icons/fa";
 import { MdOutlineWaterDrop } from "react-icons/md";
 import { FaGlassWater, FaPersonWalking } from "react-icons/fa6";
 import { CiFaceSmile } from "react-icons/ci";
+import { BsCheck2Circle } from "react-icons/bs";
+import { CgDanger } from "react-icons/cg";
+import { TbTargetArrow } from "react-icons/tb";
 
 import "./Dashboard.css";
 
@@ -23,13 +26,13 @@ const Dashboard = () => {
     const fetchDashboard = async () => {
       const token = localStorage.getItem("token");
       try {
-        // Dashboard data
+        // dashboard data
         const res = await axios.get("http://localhost:3000/api/dashboard", {
           headers: { Authorization: `Bearer ${token}` },
         });
         setData(res.data);
 
-        // AI insights
+        // ai insights
         try {
           const aiRes = await axios.post(
             "http://localhost:3000/api/ai/predict",
@@ -57,7 +60,7 @@ const Dashboard = () => {
         Welcome, <strong>{data.name}</strong>
       </p>
 
-      {/* SCORE + PROFILE */}
+      {/* profile + donut chart */}
       <div style={{ padding: "25px", display: "flex", gap: "25px" }}>
         <div
           style={{
@@ -84,7 +87,7 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* ACTIVITY CARDS (UNCHANGED LOGIC) */}
+      {/* activity cards */}
       <div className="activity-card">
         <div className="a-card">
           <div className="a-icon bmi">
@@ -141,10 +144,9 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* GRAPH + AI */}
+      {/* graph + ai */}
       <div className="graph-card d-flex justify-content-around mt-5 gap-3">
         <div className="graph mt-5">
-          <h3 className="text-white text-center mb-3">Graph</h3>
           {data.healthTrend && data.healthTrend.length > 0 ? (
             <LineChartBar data={data.healthTrend} />
           ) : (
@@ -153,29 +155,35 @@ const Dashboard = () => {
         </div>
 
         <div className="insight">
-          <h3 className="text-white text-center">Insights</h3>
+          <h3 className="insight-title">Insights</h3>
+
           <div className="insight-content">
             {aiInsights ? (
               <>
                 {aiInsights.strengths?.map((i, idx) => (
-                  <p key={idx} className="text-white">
-                    ✅ {i}
+                  <p key={idx} className="insight-item success">
+                    <BsCheck2Circle className="me-2" />
+                    {i}
                   </p>
                 ))}
+
                 {aiInsights.concerns?.map((i, idx) => (
-                  <p key={idx} className="text-white">
-                    ⚠️ {i}
+                  <p key={idx} className="insight-item danger">
+                    <CgDanger className="me-2" />
+                    {i}
                   </p>
                 ))}
+
                 {aiInsights.suggestions &&
                   Object.values(aiInsights.suggestions).map((i, idx) => (
-                    <p key={idx} className="text-white">
-                      💡 {i}
+                    <p key={idx} className="insight-item suggest">
+                      <TbTargetArrow className="me-2" />
+                      {i}
                     </p>
                   ))}
               </>
             ) : (
-              <p className="text-white">
+              <p className="insight-empty">
                 AI insights will appear after health data submission
               </p>
             )}

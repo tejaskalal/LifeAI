@@ -44,14 +44,6 @@ export default function About() {
             Your health data stays protected with secure architecture.
           </p>
         </div>
-
-        {/* <div className="feature-card">
-          <FaLaptopCode className="feature-icon" />
-          <h3 className="feature-title">Modern Tech Stack</h3>
-          <p className="feature-text">
-            Built using React, Node, MongoDB, and intelligent UI design.
-          </p>
-        </div> */}
       </div>
 
       <h2 className="projects-title">Our Projects</h2>
