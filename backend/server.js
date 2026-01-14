@@ -7,6 +7,7 @@ const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
 const dashBoardRoutes = require("./routes/dashBoardRoutes");
 const aiRoutes = require("./routes/aiRoutes");
+const chatAiRoutes = require("./routes/chatAiRoutes");
 
 const PORT = 3000;
 const app = express();
@@ -20,6 +21,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/dashboard", dashBoardRoutes);
 app.use("/api/ai", aiRoutes);
+app.use("/api/chat", chatAiRoutes);
 
 app.get("/", (req, res) => {
   res.send("Hello from Life-AI backend!");
