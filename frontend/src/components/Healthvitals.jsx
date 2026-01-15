@@ -20,6 +20,8 @@ const Healthvitals = () => {
   });
 
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   const handleChange = (e) => {
     setFormData({
@@ -28,12 +30,30 @@ const Healthvitals = () => {
     });
   };
 
+  // ✅ FRONTEND VALIDATION
+  const isFormEmpty = () => {
+    return Object.entries(formData).some(([key, value]) => {
+      if (key === "date") return false;
+      return value === "" || value === null;
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (loading) return;
 
+    // 🔴 STOP SUBMIT IF EMPTY
+    if (isFormEmpty()) {
+      setError("All fields are required");
+      setTimeout(() => setError(""), 1500);
+      return;
+    }
+
     try {
       setLoading(true);
+      setError("");
+      setSuccess("");
+
       const token = localStorage.getItem("token");
 
       const response = await fetch("http://localhost:3000/api/user/health", {
@@ -48,17 +68,23 @@ const Healthvitals = () => {
       const data = await response.json();
 
       if (response.status === 409) {
-        alert("You have already submitted your health data for today");
-        navigate("/dashboard");
+        setError("You have already submitted your health data for today");
+        setTimeout(() => {
+          setError("");
+          navigate("/dashboard");
+        }, 1500);
         return;
       }
 
       if (!response.ok) {
-        alert(data.message || "Failed to save health data");
+        setError(data.message || "Failed to save health data");
+        setTimeout(() => setError(""), 1500);
         return;
       }
 
-      alert("Health data saved successfully");
+      // ✅ SUCCESS
+      setSuccess("Health data saved successfully!");
+      setTimeout(() => setSuccess(""), 1500);
 
       setFormData({
         date: new Date().toISOString().split("T")[0],
@@ -74,10 +100,13 @@ const Healthvitals = () => {
         ateEnoughProtein: "",
       });
 
-      navigate("/dashboard", { replace: true });
-    } catch (error) {
-      console.error("Error saving health data:", error);
-      alert("Server error. Please try again later.");
+      setTimeout(() => {
+        navigate("/dashboard", { replace: true });
+      }, 1500);
+    } catch (err) {
+      console.error("Error saving health data:", err);
+      setError("Server error. Please try again later.");
+      setTimeout(() => setError(""), 1500);
     } finally {
       setLoading(false);
     }
@@ -86,6 +115,9 @@ const Healthvitals = () => {
   return (
     <div className="health-container">
       <h2 className="form-title">Daily Health Tracking</h2>
+
+      {error && <p className="msg error">{error}</p>}
+      {success && <p className="msg success">{success}</p>}
 
       <form className="health-form" onSubmit={handleSubmit}>
         {/* Weight & Height */}
