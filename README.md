@@ -23,6 +23,10 @@ Displays health data using charts, activity cards, and profile summaries for eas
 - Secure User Access
 Supports user authentication to ensure personalized and private health data management.
 
+- AI Health Chatbot 
+Integrated Ollama Phi model for instant, stateless health-related queries.
+  
+
 ---
 
 ## Tech Stack
@@ -169,6 +173,23 @@ LifeAI/
 - Store AI chat history securely for each user
 - Risk based alerts for unhealthy patterns
 - Improved dashboard animations and accessibility
+
+---
+
+
+## Sample visuals of project
+- Graph and AI insights
+<img width="1897" height="841" alt="Screenshot 2026-01-15 132837" src="https://github.com/user-attachments/assets/2e4ac37a-695b-428d-82e7-f44f9785159d" />
+
+- Activity cards
+  <img width="1892" height="509" alt="Screenshot 2026-01-15 132824" src="https://github.com/user-attachments/assets/5632a213-b7aa-4ee3-9480-37710edfdf56" />
+
+- AI Chatbot
+  <img width="1842" height="803" alt="image" src="https://github.com/user-attachments/assets/ec472c7e-2e02-4d18-847c-afc5f1e7fecf" />
+
+- About page
+ <img width="1842" height="829" alt="image" src="https://github.com/user-attachments/assets/e820905f-cf9d-4adb-ad45-8381f29f0149" />
+ 
 
 ## Conclusion
 
