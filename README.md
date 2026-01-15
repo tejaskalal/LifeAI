@@ -1,4 +1,4 @@
-# LifeAI: health tracker and wellness advisior - README
+# LifeAI: health tracker and wellness advisor - README
 
 ## Project Overview
 LifeAI is a health focused AI web application designed to help users understand, monitor, and improve their overall well being through data driven insights.
