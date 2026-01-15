@@ -29,12 +29,12 @@ Supports user authentication to ensure personalized and private health data mana
 
 ### **Frontend:**
 
--React.js
--Axios
--Bootstrap
--React icon
--Recharts
--CSS
+- React.js
+- Axios
+- Bootstrap
+- React icon
+- Recharts
+- CSS
 
 ### **Backend:**
 
